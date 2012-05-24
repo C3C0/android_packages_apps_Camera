@@ -38,9 +38,15 @@ abstract class AbstractIndicator extends GLView {
     @Override
     protected void onMeasure(int widthSpec, int heightSpec) {
         BitmapTexture icon = getIcon();
-        new MeasureHelper(this)
-               .setPreferredContentSize(icon.getWidth(), icon.getHeight())
-               .measure(widthSpec, heightSpec);
+
+        if(icon == null)
+            new MeasureHelper(this)
+                .setPreferredContentSize(0, 0)
+                .measure(widthSpec, heightSpec);
+        else
+            new MeasureHelper(this)
+                .setPreferredContentSize(icon.getWidth(), icon.getHeight())
+                .measure(widthSpec, heightSpec);
     }
 
     @Override
