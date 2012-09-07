@@ -106,6 +106,10 @@ class BasicIndicator extends AbstractIndicator {
     @Override
     protected ResourceTexture getIcon() {
         int index = mIndex;
+
+        if(index < 0 || index >= mIcon.length)
+            return null;
+
         if (mIcon[index] == null) {
             Context context = getGLRootView().getContext();
             mIcon[index] = new ResourceTexture(
