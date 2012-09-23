@@ -68,8 +68,19 @@ abstract public class ActivityBase extends Activity {
         if (val.equals(CameraSettings.VALUE_ON)){
             getWindow().addFlags(WindowManager.LayoutParams.PREVENT_POWER_KEY);
             return true;
-        }else{
+        } else {
             getWindow().clearFlags(WindowManager.LayoutParams.PREVENT_POWER_KEY);
+            return false;
+        }
+    }
+
+    protected boolean volupShutter(ComboPreferences prefs) {
+        prefs.setLocalId(getApplicationContext(), 0);
+        String val = prefs.getString(CameraSettings.KEY_VOLUP_SHUTTER,
+                getResources().getString(R.string.pref_camera_volup_shutter_default));
+        if (val.equals(CameraSettings.VALUE_ON)){
+            return true;
+        } else {
             return false;
         }
     }

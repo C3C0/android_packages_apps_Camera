@@ -61,6 +61,7 @@ public class CameraSettings {
     public static final String KEY_CAMERA_FIRST_USE_HINT_SHOWN = "pref_camera_first_use_hint_shown_key";
     public static final String KEY_VIDEO_FIRST_USE_HINT_SHOWN = "pref_video_first_use_hint_shown_key";
     public static final String KEY_POWER_SHUTTER = "pref_power_shutter";
+    public static final String KEY_VOLUP_SHUTTER = "pref_volup_shutter";
     public static final String KEY_STORAGE = "pref_camera_storage_key";
     public static final String KEY_ZSL = "pref_camera_zsl_key";
     public static final String KEY_ISO = "pref_camera_iso_key";
@@ -163,6 +164,8 @@ public class CameraSettings {
         ListPreference videoEffect = group.findPreference(KEY_VIDEO_EFFECT);
         ListPreference storage = group.findPreference(KEY_STORAGE);
         ListPreference iso = group.findPreference(KEY_ISO);
+        ListPreference burstMode = group.findPreference(KEY_BURST_MODE);
+
 
 
         // Since the screen could be loaded from different resources, we need
@@ -215,6 +218,7 @@ public class CameraSettings {
             filterUnsupportedOptions(group,
                     iso, mParameters.getSupportedIsoValues());
         }
+        if (burstMode != null) burstMode.setValueIndex(0);
     }
 
     private void buildExposureCompensation(

@@ -138,6 +138,10 @@
     <string name="pref_camera_power_shutter_title">Power shutter</string>
     <string name="pref_camera_power_shutter_default">off</string>
 
+    <!-- More Settings screen, volume up button title -->
+    <string name="pref_camera_volup_shutter_title">Volume shutter</string>
+    <string name="pref_camera_volup_shutter_default">on</string>
+
     <!-- More Settings screen, focus sound title -->
     <string name="pref_camera_focus_sound_title">Focus sound</string>
     <string name="pref_camera_focus_sound_default">on</string>

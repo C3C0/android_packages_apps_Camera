@@ -1270,6 +1270,7 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
         getPreferredCameraId();
         mStorage = CameraSettings.readStorage(mPreferences);
         powerShutter(mPreferences);
+        volupShutter(mPreferences);
         String[] defaultFocusModes = getResources().getStringArray(
                 R.array.pref_camera_focusmode_default_array);
         mFocusManager = new FocusManager(mPreferences, defaultFocusModes);
@@ -1410,6 +1411,7 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
         final String[] OTHER_SETTING_KEYS = {
                 CameraSettings.KEY_RECORD_LOCATION,
                 CameraSettings.KEY_POWER_SHUTTER,
+                CameraSettings.KEY_VOLUP_SHUTTER,
                 CameraSettings.KEY_FOCUS_SOUND,
                 CameraSettings.KEY_STORAGE,
                 CameraSettings.KEY_PICTURE_SIZE,
@@ -1965,6 +1967,14 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
                     onShutterButtonFocus(true);
                 }
                 return true;
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if (mFirstTimeInitialized && event.getRepeatCount() == 0 && volupShutter(mPreferences)) {
+                    onShutterButtonFocus(true);
+                } else if (mFirstTimeInitialized && event.getRepeatCount() == 0) {
+                    // bail out and show volume dialog
+                    break;
+                }
+                return true;
         }
 
         return super.onKeyDown(keyCode, event);
@@ -1980,6 +1990,11 @@ public class Camera extends ActivityBase implements FocusManager.Listener,
                 return true;
             case KeyEvent.KEYCODE_POWER:
                 if (powerShutter(mPreferences)) {
+                    onShutterButtonClick();
+                }
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if (volupShutter(mPreferences)) {
                     onShutterButtonClick();
                 }
                 return true;

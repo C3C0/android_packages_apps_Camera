@@ -365,6 +365,7 @@ public class VideoCamera extends ActivityBase
         mCameraId = CameraSettings.readPreferredCameraId(mPreferences);
         mStorage = CameraSettings.readStorage(mPreferences);
         powerShutter(mPreferences);
+        volupShutter(mPreferences);
         //Testing purpose. Launch a specific camera through the intent extras.
         int intentCameraId = Util.getCameraFacingIntentExtras(this);
         if (intentCameraId != -1) {
@@ -528,6 +529,7 @@ public class VideoCamera extends ActivityBase
         final String[] OTHER_SETTING_KEYS = {
                     CameraSettings.KEY_RECORD_LOCATION,
                     CameraSettings.KEY_POWER_SHUTTER,
+                    CameraSettings.KEY_VOLUP_SHUTTER,
                     CameraSettings.KEY_STORAGE};
 
         CameraPicker.setImageResourceId(R.drawable.ic_switch_video_facing_holo_light);
@@ -1064,6 +1066,12 @@ public class VideoCamera extends ActivityBase
             case KeyEvent.KEYCODE_MENU:
                 if (mMediaRecorderRecording) return true;
                 break;
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if (volupShutter(mPreferences)) {
+                    // do nothing, just don't display the volume dialog
+                    return true;
+                }
+                break;
         }
 
         return super.onKeyDown(keyCode, event);
@@ -1077,6 +1085,11 @@ public class VideoCamera extends ActivityBase
                 return true;
             case KeyEvent.KEYCODE_POWER:
                 if (powerShutter(mPreferences)) {
+                    onShutterButtonClick();
+                }
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if (volupShutter(mPreferences)) {
                     onShutterButtonClick();
                 }
                 return true;
